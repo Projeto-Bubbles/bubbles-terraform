@@ -10,4 +10,4 @@ sudo systemctl start docker
 
 sudo docker pull nginx:latest
 
-sudo docker run --name gateway -d -p 80:80 nginx:latest
+sudo docker run --name bubbles_gateway -d -p 80:80 nginx:latest
