@@ -1,4 +1,4 @@
-# Configuração de AWS Provider
+# AWS Provider
 
 terraform {
   required_providers {
@@ -13,7 +13,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-#Configuração de VPC
+# VPC
 
 resource "aws_vpc" "vpc-tf" {
   cidr_block       = "10.0.0.0/24"
@@ -68,13 +68,13 @@ resource "aws_security_group" "public_security_group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Permite tráfego HTTPS de todos os endereços IP
   }
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"          # Permitir todo o tráfego
     cidr_blocks = ["0.0.0.0/0"] # Permitir todo o tráfego de saída
   }
-
 }
 
 resource "aws_security_group" "private_security_group" {
@@ -101,19 +101,20 @@ resource "aws_security_group" "private_security_group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Permite tráfego HTTPS de todos os endereços IP
   }
+
   ingress {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Permite tráfego HTTPS de todos os endereços IP
   }
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"          # Permitir todo o tráfego
     cidr_blocks = ["0.0.0.0/0"] # Permitir todo o tráfego de saída
   }
-
 }
 
 resource "aws_instance" "gateway_bubbles" {
@@ -122,7 +123,6 @@ resource "aws_instance" "gateway_bubbles" {
   key_name                    = "myssh"
   subnet_id                   = aws_subnet.subnet-public.id
   associate_public_ip_address = true # Habilita a atribuição automática de IP público
-
   vpc_security_group_ids = [aws_security_group.public_security_group.id]
 
   provisioner "file" {
@@ -136,6 +136,7 @@ resource "aws_instance" "gateway_bubbles" {
       host        = self.public_ip # Ou self.private_ip para uma instância em uma VPC
     }                              # Destino na instância
   }
+
   provisioner "file" {
     source      = "./frontconfig.sh" # Caminho local do seu script
     destination = "/home/ubuntu/executable/frontconfig.sh"
@@ -147,6 +148,7 @@ resource "aws_instance" "gateway_bubbles" {
       host        = self.public_ip # Ou self.private_ip para uma instância em uma VPC
     }                              # Destino na instância
   }
+
   provisioner "file" {
     source      = "./bdconfig.sh" # Caminho local do seu script
     destination = "/home/ubuntu/executable/bdconfig.sh"
@@ -158,6 +160,7 @@ resource "aws_instance" "gateway_bubbles" {
       host        = self.public_ip # Ou self.private_ip para uma instância em uma VPC
     }                              # Destino na instância
   }
+
   provisioner "remote-exec" {
     inline = [
       "chmod +x /home/ubuntu/executable/gatewayconfig.sh", # Concede permissões de execução ao script
@@ -175,96 +178,83 @@ resource "aws_instance" "gateway_bubbles" {
   tags = {
     Name = "Gateway Bubbles"
   }
-
 }
+
 resource "aws_instance" "frontend1_bubbles" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-public.id
-
-
   vpc_security_group_ids = [aws_security_group.public_security_group.id]
 
   tags = {
     Name = "Front1"
   }
-
 }
+
 resource "aws_instance" "frontend2_bubbles" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-public.id
-
-
   vpc_security_group_ids = [aws_security_group.public_security_group.id]
 
   tags = {
     Name = "Front2"
   }
-
 }
+
 resource "aws_instance" "backload_bubbles" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-private.id
-
-
   vpc_security_group_ids = [aws_security_group.private_security_group.id]
-
 
   tags = {
     Name = "Backload"
   }
-
 }
+
 resource "aws_instance" "bd_instance" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-private.id
-
-
   vpc_security_group_ids = [aws_security_group.private_security_group.id]
 
   tags = {
     Name = "BD Instance"
   }
-
 }
+
 resource "aws_instance" "backend1_bubbles" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-private.id
-
-
   vpc_security_group_ids = [aws_security_group.private_security_group.id]
 
   tags = {
     Name = "Back1"
   }
-
 }
+
 resource "aws_instance" "backend2_bubbles" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-private.id
-
-
   vpc_security_group_ids = [aws_security_group.private_security_group.id]
 
   tags = {
     Name = "Back2"
   }
-
 }
 
 resource "aws_internet_gateway" "my_igw" {
   vpc_id = aws_vpc.vpc-tf.id
+
   tags = {
     Name = "my-igw"
   }
@@ -277,17 +267,18 @@ resource "aws_route_table" "public_route_table" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.my_igw.id
   }
+
   tags = {
     Name = "my-public-route-table"
   }
 }
+
 resource "aws_route_table_association" "public_route_association" {
   subnet_id      = aws_subnet.subnet-public.id
   route_table_id = aws_route_table.public_route_table.id
-
 }
 
-# Recursos Nat Gateway
+# Nat Gateway Resources
 resource "aws_eip" "my_eip" {
   domain = "vpc" # Usar domain nas configurações mais atuais.
 }
@@ -299,6 +290,7 @@ resource "aws_route_table" "private_route_table" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.my_nat_gateway.id
   }
+
   tags = {
     Name = "my-private-route-table"
   }
@@ -312,6 +304,7 @@ resource "aws_route_table_association" "private_route_association" {
 resource "aws_nat_gateway" "my_nat_gateway" {
   allocation_id = aws_eip.my_eip.id
   subnet_id     = aws_subnet.subnet-public.id
+
   tags = {
     Name = "my-nat-gateway"
   }
@@ -319,8 +312,8 @@ resource "aws_nat_gateway" "my_nat_gateway" {
 
 resource "aws_network_acl" "public_network_acl" {
   vpc_id = aws_vpc.vpc-tf.id
-
   subnet_ids = [aws_subnet.subnet-public.id]
+
   tags = {
     Name = "public-network-acl"
   }
@@ -328,8 +321,8 @@ resource "aws_network_acl" "public_network_acl" {
 
 resource "aws_network_acl" "private_network_acl" {
   vpc_id = aws_vpc.vpc-tf.id
-
   subnet_ids = [aws_subnet.subnet-private.id]
+
   tags = {
     Name = "private-network-acl"
   }
@@ -448,6 +441,7 @@ resource "aws_network_acl_rule" "private_to_public_inbound_rule" {
   from_port      = 3000
   to_port        = 65535
 }
+
 resource "aws_network_acl_rule" "private_to_public_outbound_rule" {
   network_acl_id = aws_network_acl.private_network_acl.id
   rule_number    = 150
