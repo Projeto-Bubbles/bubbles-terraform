@@ -126,8 +126,8 @@ resource "aws_instance" "gateway_bubbles" {
   vpc_security_group_ids = [aws_security_group.public_security_group.id]
 
   provisioner "file" {
-    source      = "./gatewayconfig.sh" # Caminho local do seu script
-    destination = "/home/ubuntu/executable/gatewayconfig.sh"
+    source      = "./gateway-config/gatewayconfig.sh" # Caminho local do seu script
+    destination = "/home/ubuntu/gatewayconfig.sh"
 
     connection {
       type        = "ssh"
@@ -138,8 +138,8 @@ resource "aws_instance" "gateway_bubbles" {
   }
 
   provisioner "file" {
-    source      = "./frontconfig.sh" # Caminho local do seu script
-    destination = "/home/ubuntu/executable/frontconfig.sh"
+    source      = "./website-config/websiteconfig.sh" # Caminho local do seu script
+    destination = "/home/ubuntu/websiteconfig.sh"
 
     connection {
       type        = "ssh"
@@ -150,33 +150,33 @@ resource "aws_instance" "gateway_bubbles" {
   }
 
   provisioner "file" {
-    source      = "./bdconfig.sh" # Caminho local do seu script
-    destination = "/home/ubuntu/executable/bdconfig.sh"
-
+    source      = "./api-config/apiconfig.sh"  # Caminho local do seu script
+    destination = "/home/ubuntu/apiconfig.sh"   
+    
     connection {
       type        = "ssh"
-      user        = "ubuntu" # Ou o usuário SSH da sua instância
+      user        = "ubuntu"  # Ou o usuário SSH da sua instância
       private_key = var.private_key
-      host        = self.public_ip # Ou self.private_ip para uma instância em uma VPC
-    }                              # Destino na instância
+      host        = self.public_ip  # Ou self.private_ip para uma instância em uma VPC
+    }                   # Destino na instância
   }
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /home/ubuntu/executable/gatewayconfig.sh", # Concede permissões de execução ao script
-      "/home/ubuntu/executable/gatewayconfig.sh",          # Executa o script
+      "chmod +x /home/ubuntu/gatewayconfig.sh",  # Concede permissões de execução ao script
+      "/home/ubuntu/gatewayconfig.sh",            # Executa o script
     ]
 
     connection {
       type        = "ssh"
-      user        = "ubuntu" # Ou o usuário SSH da sua instância
+      user        = "ubuntu"  # Ou o usuário SSH da sua instância
       private_key = var.private_key
-      host        = self.public_ip # Ou self.private_ip para uma instância em uma VPC
+      host        = self.public_ip  # Ou self.private_ip para uma instância em uma VPC
     }
   }
 
   tags = {
-    Name = "Gateway Bubbles"
+    Name = "bubbles_gateway"
   }
 }
 
@@ -185,10 +185,11 @@ resource "aws_instance" "frontend1_bubbles" {
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-public.id
+  associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.public_security_group.id]
 
   tags = {
-    Name = "Front1"
+    Name = "website_bubbles_01"
   }
 }
 
@@ -197,10 +198,11 @@ resource "aws_instance" "frontend2_bubbles" {
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-public.id
+  associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.public_security_group.id]
 
   tags = {
-    Name = "Front2"
+    Name = "website_bubbles_02"
   }
 }
 
@@ -212,19 +214,7 @@ resource "aws_instance" "backload_bubbles" {
   vpc_security_group_ids = [aws_security_group.private_security_group.id]
 
   tags = {
-    Name = "Backload"
-  }
-}
-
-resource "aws_instance" "bd_instance" {
-  ami           = "ami-04b70fa74e45c3917"
-  instance_type = "t2.micro"
-  key_name      = "myssh"
-  subnet_id     = aws_subnet.subnet-private.id
-  vpc_security_group_ids = [aws_security_group.private_security_group.id]
-
-  tags = {
-    Name = "BD Instance"
+    Name = "loadbalancer_back"
   }
 }
 
@@ -236,7 +226,7 @@ resource "aws_instance" "backend1_bubbles" {
   vpc_security_group_ids = [aws_security_group.private_security_group.id]
 
   tags = {
-    Name = "Back1"
+    Name = "api_bubbles_01"
   }
 }
 
@@ -248,15 +238,15 @@ resource "aws_instance" "backend2_bubbles" {
   vpc_security_group_ids = [aws_security_group.private_security_group.id]
 
   tags = {
-    Name = "Back2"
+    Name = "api_bubbles_02"
   }
 }
 
-resource "aws_internet_gateway" "my_igw" {
+resource "aws_internet_gateway" "bubbles_igw" {
   vpc_id = aws_vpc.vpc-tf.id
 
   tags = {
-    Name = "my-igw"
+    Name = "igw"
   }
 }
 
@@ -265,11 +255,11 @@ resource "aws_route_table" "public_route_table" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.my_igw.id
+    gateway_id = aws_internet_gateway.bubbles_igw.id
   }
 
   tags = {
-    Name = "my-public-route-table"
+    Name = "public-route-table"
   }
 }
 
@@ -279,7 +269,7 @@ resource "aws_route_table_association" "public_route_association" {
 }
 
 # Nat Gateway Resources
-resource "aws_eip" "my_eip" {
+resource "aws_eip" "bubbles_eip" {
   domain = "vpc" # Usar domain nas configurações mais atuais.
 }
 
@@ -288,11 +278,11 @@ resource "aws_route_table" "private_route_table" {
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.my_nat_gateway.id
+    nat_gateway_id = aws_nat_gateway.bubbles_nat_gateway.id
   }
 
   tags = {
-    Name = "my-private-route-table"
+    Name = "private-route-table"
   }
 }
 
@@ -301,12 +291,12 @@ resource "aws_route_table_association" "private_route_association" {
   route_table_id = aws_route_table.private_route_table.id
 }
 
-resource "aws_nat_gateway" "my_nat_gateway" {
-  allocation_id = aws_eip.my_eip.id
+resource "aws_nat_gateway" "bubbles_nat_gateway" {
+  allocation_id = aws_eip.bubbles_eip.id
   subnet_id     = aws_subnet.subnet-public.id
 
   tags = {
-    Name = "my-nat-gateway"
+    Name = "nat-gateway"
   }
 }
 
