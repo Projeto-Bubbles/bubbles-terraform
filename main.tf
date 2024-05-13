@@ -188,6 +188,32 @@ resource "aws_instance" "frontend1_bubbles" {
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.public_security_group.id]
 
+  provisioner "file" {
+    source      = "./website-config/websiteconfig.sh" # Caminho local do seu script
+    destination = "/home/ubuntu/websiteconfig.sh"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu" # Ou o usuário SSH da sua instância
+      private_key = var.private_key
+      host        = self.public_ip # Ou self.private_ip para uma instância em uma VPC
+    }                              # Destino na instância
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod +x /home/ubuntu/websiteconfig.sh",  # Concede permissões de execução ao script
+      "sudo /home/ubuntu/websiteconfig.sh",            # Executa o script
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"  # Ou o usuário SSH da sua instância
+      private_key = var.private_key
+      host        = self.public_ip  # Ou self.private_ip para uma instância em uma VPC
+    }
+  }
+
   tags = {
     Name = "website_bubbles_01"
   }
@@ -200,6 +226,32 @@ resource "aws_instance" "frontend2_bubbles" {
   subnet_id     = aws_subnet.subnet-public.id
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.public_security_group.id]
+
+  provisioner "file" {
+    source      = "./website-config/websiteconfig.sh" # Caminho local do seu script
+    destination = "/home/ubuntu/websiteconfig.sh"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu" # Ou o usuário SSH da sua instância
+      private_key = var.private_key
+      host        = self.public_ip # Ou self.private_ip para uma instância em uma VPC
+    }                              # Destino na instância
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod +x /home/ubuntu/websiteconfig.sh",  # Concede permissões de execução ao script
+      "sudo /home/ubuntu/websiteconfig.sh",            # Executa o script
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"  # Ou o usuário SSH da sua instância
+      private_key = var.private_key
+      host        = self.public_ip  # Ou self.private_ip para uma instância em uma VPC
+    }
+  }
 
   tags = {
     Name = "website_bubbles_02"
@@ -224,7 +276,7 @@ resource "aws_instance" "backend1_bubbles" {
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-private.id
   vpc_security_group_ids = [aws_security_group.private_security_group.id]
-
+  
   tags = {
     Name = "api_bubbles_01"
   }
@@ -235,7 +287,7 @@ resource "aws_instance" "backend2_bubbles" {
   instance_type = "t2.micro"
   key_name      = "myssh"
   subnet_id     = aws_subnet.subnet-private.id
-  vpc_security_group_ids = [aws_security_group.private_security_group.id]
+  vpc_security_group_ids = [aws_security_group.private_security_group.id] 
 
   tags = {
     Name = "api_bubbles_02"
