@@ -325,6 +325,12 @@ resource "aws_eip" "bubbles_eip" {
   domain = "vpc" # Usar domain nas configurações mais atuais.
 }
 
+resource "aws_eip" "gateway_ip_publico" {
+  domain = "vpc"
+  instance                  = aws_instance.gateway_bubbles.id
+  associate_with_private_ip = aws_instance.gateway_bubbles.private_ip
+}
+
 resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.vpc-tf.id
 
