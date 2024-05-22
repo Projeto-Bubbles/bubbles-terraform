@@ -1,4 +1,4 @@
-## <div align="center">🔍Visão Geral</div>
+# <div align="center">🔍Visão Geral</div>
 
 <p align="left">
   Este repositório é dedicado para os arquivos da arquitetura da Bubbles na AWS. O objetivo destes arquivos é fornecer uma solução completa e eficiente para hospedar nossa aplicação        web desenvolvida com React e Typescript, e da nossa API REST desenvolvida com SpringBoot, priorizando alta disponibilidade, balanceamento de carga e segurança. <br><br>
@@ -33,17 +33,20 @@
   <img src="assets/diagrama_de_arquitetura.jpg" />
 </div>
 
-## <div align="center">👨‍💻Tecnologias</div>
+# <div align="center">👨‍💻Tecnologias</div>
 
 <div align="center">
   <img src="https://skillicons.dev/icons?i=aws,ubuntu,terraform,docker,nginx,vim&theme=dark" />
 </div>
 
-## <div align="center">📖Detalhes Técnicos e Guia de Instalação</div>
-* Chocolatey
-* Editor de Texto (Visual Studio Code)
-* Variáveis de Usuários do Windows
-* Docker
+# <div align="center">📖Detalhes Técnicos e Guia de Instalação</div>
+## 🪟Windows
+1. Para executar o terraform no Windows, é necessário ter instalado o chocolatey. Site oficial para Download: https://chocolatey.org/ 
+2. É altamente recomendado ter um editor de texto como o Visual Studio Code, ele facilitará a visualização do código Terraform, shell e já vem com um terminal integrado para execução dos comandos. Site oficial para Download: https://code.visualstudio.com/download
+3. Para executar os comandos do chocolatey e do terraform é necessário que as politícas de execução do Windows estejam na seguinte configuração: <img src="assets/.jpg" />
+  - Caso não estejam assim, siga este guia: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4
+4. Instalar o terraform com o comando: choco install terraform
+5. Instalar o docker. Site oficial para Download: https://www.docker.com/products/docker-desktop/
 
-## <div align="center">💡Como Usar o Projeto?</div>
-## <div align="center">🔗Recursos Adicionais</div>
+# <div align="center">💡Como Usar o Projeto?</div>
+# <div align="center">🔗Recursos Adicionais</div>
