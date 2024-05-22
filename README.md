@@ -30,7 +30,7 @@
 
 ### <div align="center">🖼️Desenho da Arquitetura</div>
 <div align="center">
-  <img src="assets/bubbles_architecture" />
+  <img src="assets/diagrama_de_arquitetura.jpg" />
 </div>
 
 ## <div align="center">👨‍💻Tecnologias</div>
