@@ -40,7 +40,7 @@
 </div>
 
 # <div align="center">📖Guia de Instalação</div>
-## 🪟Windows
+### 🪟Windows:
 1. Para executar o terraform no Windows, é necessário ter instalado o chocolatey (Gerenciador de pacotes para Windows). Site oficial para Download: https://chocolatey.org/ 
 2. É altamente recomendado ter um editor de texto como o Visual Studio Code, ele facilitará a visualização do código Terraform, shell e já vem com um terminal integrado para execução dos comandos. Site oficial para Download: https://code.visualstudio.com/download
 3. Para executar os comandos do chocolatey e do terraform é necessário que as politícas de execução do Windows estejam na seguinte configuração: <img src="assets/politicas_de_execucao.jpg" />
@@ -48,6 +48,10 @@
 4. Use o comando a seguir para instalar o terraform:
 ```choco install terraform``` 
 5. Instale também o Docker Desktop para Windows. Site oficial para Download: https://www.docker.com/products/docker-desktop/
+
+### 🐧Linux:
+
+### 🍎MacOS:
 
 # <div align="center">💡Como Usar o Projeto?</div>
 # <div align="center">🔗Recursos Adicionais</div>
