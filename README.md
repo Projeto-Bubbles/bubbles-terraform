@@ -1,14 +1,25 @@
 <p align="center">
- <img width="100px" src="assets/bubbles_logo.png" align="center" alt="Bubbles Logo" />
- <h2 align="center">Bubbles AWS Architecture</h2>
- <p align="center">Estruture e proteja sua aplicação com AWS e Terraform, garantindo desempenho, alta disponibilidade, segurança e eficiência!</p>
- <p align="center">
-    <a href="/docs/readme_pt-BR.md">Português</a>
-    ·
-    <a href="/docs/readme_en.md">English</a>
-  </p>
+  <img width="100px" src="assets/bubbles_logo.png" align="center" alt="Bubbles Logo" />
+  <h2 align="center">Bubbles AWS Architecture</h2>
+  <p align="center">Segurança e eficiência com AWS e Terraform para sua aplicação!</p>
+</p>
 
-# <div align="center">🔍Visão Geral</div>
+<p align="center">
+  <a href="/docs/readme_pt-BR.md">Português</a> · <a href="/docs/readme_en.md">English</a>
+</p>
+
+# 🔍Índice <!-- omit in toc -->
+- [Visão Geral](#visão-geral)
+  - [Rede](#rede)
+  - [Segurança](#segurança)
+  - [Instâncias](#instâncias)
+  - [Desenho da Arquitetura](#desenho-da-arquitetura)
+- [Tecnologias](#tecnologias)
+- [Guia de Instalação](#guia-de-instalação)
+- [Como Usar o Projeto?](#como-usar-o-projeto)
+- [Recursos Adicionais](#recursos-adicionais)
+
+# 📝Visão Geral
 
 <p align="left">
   Este repositório é dedicado para os arquivos da arquitetura da Bubbles na AWS. O objetivo destes arquivos é fornecer uma solução completa e eficiente para hospedar nossa aplicação        web desenvolvida com React e Typescript, e da nossa API REST desenvolvida com SpringBoot, priorizando alta disponibilidade, balanceamento de carga e segurança. <br><br>
@@ -35,13 +46,9 @@
   * **Front-End (2 Instâncias)**: Hospedam a interface do usuário da aplicação, servindo o conteúdo estático e interagindo com o backend.
   * **Load Balancer do Back-End**: Distribui as requisições recebidas entre as instâncias backend, garantindo alta disponibilidade e escalabilidade para a API.
   * **Back-End (2 Instâncias)**: Executam a lógica da aplicação, processando dados, interagindo com o banco de dados e fornecendo respostas para os frontends.
-  
-<br>
 
-### <div align="center">🖼️Desenho da Arquitetura</div>
-<div align="center">
-  <img src="assets/diagrama_de_arquitetura.png" />
-</div>
+### **🎨Desenho da Arquitetura**
+<img src="assets/diagrama_de_arquitetura.png" />
 
 # <div align="center">👨‍💻Tecnologias</div>
 
