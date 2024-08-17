@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="/docs/readme_pt-BR.md">Português</a> · <a href="/docs/readme_en.md">English</a>
+  <a href="#">Português</a> · <a href="/docs/readme_en.md">English</a>
 </p>
 
 # 🔍Índice <!-- omit in toc -->
@@ -20,13 +20,11 @@
 - [Recursos Adicionais](#recursos-adicionais)
 
 # 📝Visão Geral
+A arquitetura da Bubbles AWS Architecture foi projetada para oferecer uma solução robusta, segura e escalável para a hospedagem da <a href="https://github.com/Projeto-Bubbles/bubbles-website-app" target="_blank">Bubbles Website</a> e <a href="https://github.com/Projeto-Bubbles/bubbles-spring-api-backend" target="_blank">Bubbles API</a>. Combinando o poder da AWS e a automação do Terraform, este repositório fornece os arquivos necessários para a criação e configuração de uma infraestrutura completa que prioriza alta disponibilidade, balanceamento de carga e segurança. A arquitetura está organizada em três pilares fundamentais.
 
-<p align="left">
-  Este repositório é dedicado para os arquivos da arquitetura da Bubbles na AWS. O objetivo destes arquivos é fornecer uma solução completa e eficiente para hospedar nossa aplicação        web desenvolvida com React e Typescript, e da nossa API REST desenvolvida com SpringBoot, priorizando alta disponibilidade, balanceamento de carga e segurança. <br><br>
-  O Terraform, busca automatizar a criação e configuração de toda a infraestrutura na AWS, incluindo:
-</p>
+### **🛜Rede**
+  Garante o isolamento, a conectividade e o roteamento seguros e eficientes dos recursos.
 
-### **🛜Rede**:
   * **VPC**: Define o espaço de rede isolado na AWS onde todos os recursos serão executados.
   * **Sub-rede pública**: Hospeda recursos acessíveis pela internet, como o gateway Nginx e as instâncias de front-end.
   * **Sub-rede privada**: Hospeda recursos internos, protegidos do acesso direto da internet, como as instâncias de back-end e o load balancer do back-end.
@@ -38,10 +36,16 @@
   * **Elastic IP do NAT Gateway**: Garante que o NAT Gateway tenha um endereço IP consistente para comunicação externa.
   * **Elastic IP da Instância Gateway**: Garante que a istância Gateway tenha um endereço IP consistente para comunicação externa.
   * **ACLs de Rede**: Atuam como um firewall adicional para as sub-redes, controlando o tráfego de rede com base em regras específicas, adicionando uma camada extra de segurança.
-### **🔒Segurança**:
+
+### **🔒Segurança**
+  Implementa políticas rigorosas para proteger tanto o front-end quanto o back-end contra ameaças.
+
   * **Grupo de segurança público**: Permite tráfego HTTP, HTTPS, SSH e tráfego na porta 8080 de qualquer lugar.
   * **Grupo de segurança privado**: Permite tráfego HTTP, SSH e tráfego na porta 8080 de qualquer lugar.
-### **💾Instâncias**:
+
+### **💾Instâncias**
+  Gerencia a execução dos componentes da aplicação, assegurando a distribuição adequada de recursos e o desempenho otimizado.
+
   * **Gateway (Nginx)**: Balanceador de carga do front-end, direciona o trafégo para o load balancer do back-end. Possui um IP Elástico.
   * **Front-End (2 Instâncias)**: Hospedam a interface do usuário da aplicação, servindo o conteúdo estático e interagindo com o backend.
   * **Load Balancer do Back-End**: Distribui as requisições recebidas entre as instâncias backend, garantindo alta disponibilidade e escalabilidade para a API.
@@ -50,28 +54,25 @@
 ### **🎨Desenho da Arquitetura**
 <img src="assets/diagrama_de_arquitetura.png" />
 
-# <div align="center">👨‍💻Tecnologias</div>
+O diagrama acima ilustra a arquitetura da aplicação Bubbles, destacando a separação e segurança dos recursos em uma VPC (Virtual Private Cloud) na região Norte da Virgínia. A infraestrutura está dividida em sub-redes públicas e privadas, cada uma configurada para atender a diferentes partes da aplicação:
+
+- Sub-rede Pública (10.0.0.0/25): Hospeda os componentes do front-end e o balanceador de carga do Nginx, permitindo que os usuários acessem a aplicação através da internet. O Internet Gateway conecta essa sub-rede à internet, enquanto uma Tabela de Rotas Pública garante que o tráfego seja direcionado adequadamente. Esta sub-rede é protegida por um Grupo de Segurança Público, que controla o acesso aos recursos expostos. <br><br>
+
+- Sub-rede Privada (10.0.0.128/25): Destinada aos componentes críticos de back-end, como as instâncias de Spring Boot que processam a lógica da aplicação. O acesso à internet, quando necessário, é realizado através do NAT Gateway, mantendo os recursos protegidos de acessos externos diretos. A Tabela de Rotas Privada e as ACLs de Rede Privada (NACL) reforçam a segurança desta sub-rede. Os recursos desta área estão sob um Grupo de Segurança Privado que limita estritamente o tráfego permitido. <br><br>
+
+- Interconexões e Segurança: As instâncias de front-end e back-end comunicam-se internamente, sendo o tráfego cuidadosamente filtrado por grupos de segurança específicos. O diagrama destaca também o uso de endereços IP elásticos, garantindo que os gateways de rede mantenham endereços IP consistentes, essenciais para a comunicação com o mundo exterior.
+
+Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isolando os diferentes componentes da aplicação conforme suas funções e necessidades de acesso, ao mesmo tempo em que proporciona alta disponibilidade e resiliência para a infraestrutura da aplicação.
+
+# 👨‍💻Tecnologias
 
 <div align="center">
   <img src="https://skillicons.dev/icons?i=aws,ubuntu,terraform,docker,nginx,vim&theme=dark" />
 </div>
 
-# <div align="center">📖Guia de Instalação</div>
-### 🪟Windows:
-1. Para executar o terraform no Windows, é necessário ter instalado o chocolatey (Gerenciador de pacotes para Windows). Site oficial para Download: https://chocolatey.org/ 
-2. É altamente recomendado ter um editor de texto como o Visual Studio Code, ele facilitará a visualização do código Terraform, shell e já vem com um terminal integrado para execução dos comandos. Site oficial para Download: https://code.visualstudio.com/download
-3. Para executar os comandos do chocolatey e do terraform é necessário que as politícas de execução do Windows estejam na seguinte configuração: <img src="assets/politicas_de_execucao.jpg" />
-  - Caso não estejam assim, siga este guia: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4
-4. Use o comando a seguir para instalar o terraform:
-```choco install terraform``` 
-5. Instale também o Docker Desktop para Windows. Site oficial para Download: https://www.docker.com/products/docker-desktop/
-
-### 🐧Linux:
-
-### 🍎MacOS:
-
-# <div align="center">💡Como Usar o Projeto?</div>
-# <div align="center">🔗Recursos Adicionais</div>
+# 📖Guia de Instalação
+# 💡Como Usar o Projeto?
+# 🔗Recursos Adicionais
 1. Aplicativos:
   - Visual Studio Code: https://code.visualstudio.com/download
   - DockerHub: https://www.docker.com/products/docker-desktop/
@@ -79,3 +80,4 @@
 2. Linguagens e pacotes:  
   - Chocolatey: https://chocolatey.org/ 
   - Terraform: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+  - Credenciais do usuário Linux e Mac: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4
