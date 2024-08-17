@@ -20,3 +20,5 @@ terraform.rc
 security.tf
 
 .terraform.lock.hcl
+
+teste.md

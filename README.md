@@ -1,3 +1,13 @@
+<p align="center">
+ <img width="100px" src="assets/bubbles_logo.png" align="center" alt="Bubbles Logo" />
+ <h2 align="center">Bubbles AWS Architecture</h2>
+ <p align="center">Estruture e proteja sua aplicação com AWS e Terraform, garantindo desempenho, alta disponibilidade, segurança e eficiência!</p>
+ <p align="center">
+    <a href="/docs/readme_pt-BR.md">Português</a>
+    ·
+    <a href="/docs/readme_en.md">English</a>
+  </p>
+
 # <div align="center">🔍Visão Geral</div>
 
 <p align="left">
