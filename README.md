@@ -31,7 +31,7 @@
   <p align="center">
     <img src="https://skillicons.dev/icons?i=aws" />
   </p>
-
+  <br>
   </td>
   
   <td valign="top" width="20%">
