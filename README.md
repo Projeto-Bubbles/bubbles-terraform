@@ -73,7 +73,7 @@
 
 
 # 📝Visão Geral
-A arquitetura da Bubbles AWS Architecture foi projetada para oferecer uma solução robusta, segura e escalável para a hospedagem da <a href="https://github.com/Projeto-Bubbles/bubbles-website-app" target="_blank">Bubbles Website</a> e <a href="https://github.com/Projeto-Bubbles/bubbles-spring-api-backend" target="_blank">Bubbles API</a>. Combinando o poder da AWS e a automação do Terraform, este repositório fornece os arquivos necessários para a criação e configuração de uma infraestrutura completa que prioriza alta disponibilidade, balanceamento de carga e segurança. A arquitetura está organizada em três pilares fundamentais.
+A Bubbles AWS Architecture foi projetada para oferecer uma solução robusta, segura e escalável para a hospedagem da <a href="https://github.com/Projeto-Bubbles/bubbles-website-app" target="_blank">Bubbles Website</a> e <a href="https://github.com/Projeto-Bubbles/bubbles-spring-api-backend" target="_blank">Bubbles API</a>. Combinando o poder da AWS e a automação do Terraform, este repositório fornece os arquivos necessários para a criação e configuração de uma infraestrutura completa que prioriza alta disponibilidade, balanceamento de carga e segurança. A arquitetura está organizada em três pilares fundamentais.
 
 ### **🛜Rede**
   Garante o isolamento, a conectividade e o roteamento seguros e eficientes dos recursos.
@@ -131,30 +131,31 @@ Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isol
     aws configure
     ```
 
-3. **AWS Access Key ID** <br>
-  Insira a chave de acesso obtida no passo anterior.
-4. **AWS Secret Access Key** <br>
-  Insira a chave secreta correspondente.
-5. **Default region name** <br>
-  Especifique a região (ex.: us-east-1).
-6. **Default output format** <br>
-  Deixe como json ou outro formato de sua preferência
-    - **Defina o Token da Sessão (Opcional, se aplicável)** <br>
-      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido.
+3. **Definindo Chaves, Região, Sessão e Token** 
+    1. **AWS Access Key ID** <br>
+      Insira a chave de acesso obtida no passo anterior.
+    2. **AWS Secret Access Key** <br>
+      Insira a chave secreta correspondente.
+    3. **Default region name** <br>
+      Especifique a região (ex.: us-east-1).
+    4. **Default output format** <br>
+      Deixe como json ou outro formato de sua preferência
+    5. **(Opcional, se aplicável) Defina o Token da Sessão** <br>
+      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido. <br>
       ```
       aws configure set aws_session_token <<token>>
       ``` 
-7. **Inicialize o Terraform** <br>
-  Com a AWS CLI configurada, o próximo passo é preparar o Terraform para gerenciar a infraestrutura. E para isso, precisamos baixar todos os provedores necessários e preparar o ambiente de trabalho para o Terraform.Na raiz do diretório do projeto, execute o comando:
+4. **Inicialize o Terraform** <br>
+  Com a AWS CLI configurada, o próximo passo é preparar o Terraform para gerenciar a infraestrutura. E para isso, precisamos baixar todos os provedores necessários e preparar o ambiente de trabalho para o Terraform. Na raiz do diretório do projeto, execute o comando:
     ``` 
     terraform init
     ```    
-8. **Aplique a Configuração do Terraform** <br>
+5. **Aplique a Configuração do Terraform** <br>
   Após a inicialização, você está pronto para criar ou atualizar a infraestrutura na AWS. Para aplicar as configurações definidas nos arquivos .tf e provisionar a infraestrutura na AWS, use o comando:
     ```
     terraform apply
     ```
-9. **Revise e Confirme** <br>
+6. **Revise e Confirme** <br>
   O Terraform apresentará um resumo das mudanças que serão feitas. Revise as alterações e, se estiver de acordo, confirme digitando `yes` quando solicitado.
 
 # 💡Como Usar o Projeto?
