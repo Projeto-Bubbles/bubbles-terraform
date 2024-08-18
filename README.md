@@ -154,7 +154,7 @@ Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isol
     ```
     terraform apply
     ```
-9. **Revise e Confirme**
+9. **Revise e Confirme** <br>
   O Terraform apresentará um resumo das mudanças que serão feitas. Revise as alterações e, se estiver de acordo, confirme digitando `yes` quando solicitado.
 
 # 💡Como Usar o Projeto?
