@@ -118,38 +118,38 @@ O diagrama acima ilustra a arquitetura da aplicação Bubbles, destacando a sepa
 Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isolando os diferentes componentes da aplicação conforme suas funções e necessidades de acesso, ao mesmo tempo em que proporciona alta disponibilidade e resiliência para a infraestrutura da aplicação.
 
 # 📖Guia de Instalação
-1. **Obtenha as Credenciais da AWS**
+1. **Obtenha as Credenciais da AWS** <br>
   Antes de começar a configurar o ambiente, você precisará das credenciais da AWS para acessar os serviços necessários. Se estiver utilizando um laboratório ou ambiente temporário, acesse o terminal execute o comando abaixo para exibir as credenciais:
     - **Atenção:** Essas credenciais podem mudar sempre que você iniciar um novo laboratório ou sessão. Certifique-se de obter as novas credenciais toda vez que começar um novo lab.
     ```
     cat ~/.aws/credentials
     ```
-2. **Configure o AWS CLI**
+2. **Configure o AWS CLI** <br>
   Com as credenciais em mãos, você precisará configurar a AWS CLI (Command Line Interface) para interagir com a AWS. Isso pode ser feito usando qualquer terminal, como PowerShell, Bash ou CMD. Digite o comando abaixo no terminal e siga as instruções para inserir a Access Key, Secret Key e a região desejada:
 
     ```
     aws configure
     ```
 
-3. **AWS Access Key ID** 
+3. **AWS Access Key ID** <br>
   Insira a chave de acesso obtida no passo anterior.
-4. **AWS Secret Access Key**
+4. **AWS Secret Access Key** <br>
   Insira a chave secreta correspondente.
-5. **Default region name**
+5. **Default region name** <br>
   Especifique a região (ex.: us-east-1).
-6. **Default output format**
+6. **Default output format** <br>
   Deixe como json ou outro formato de sua preferência
-    - **Defina o Token da Sessão (Opcional, se aplicável)**
+    - **Defina o Token da Sessão (Opcional, se aplicável)** <br>
       Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido.
       ```
       aws configure set aws_session_token <<token>>
       ``` 
-7. **Inicialize o Terraform**
+7. **Inicialize o Terraform** <br>
   Com a AWS CLI configurada, o próximo passo é preparar o Terraform para gerenciar a infraestrutura. E para isso, precisamos baixar todos os provedores necessários e preparar o ambiente de trabalho para o Terraform.Na raiz do diretório do projeto, execute o comando:
     ``` 
     terraform init
     ```    
-8. **Aplique a Configuração do Terraform**
+8. **Aplique a Configuração do Terraform** <br>
   Após a inicialização, você está pronto para criar ou atualizar a infraestrutura na AWS. Para aplicar as configurações definidas nos arquivos .tf e provisionar a infraestrutura na AWS, use o comando:
     ```
     terraform apply
