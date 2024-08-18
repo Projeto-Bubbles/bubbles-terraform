@@ -22,48 +22,52 @@
 # 💻Tecnologias
 <table align="center"><tr>
   <td valign="top" width="20%">
-      
-  ### <div align="center"> Plataforma de Nuvem </div>
-      
+  <br>
   <p align="center">
     <img src="https://skillicons.dev/icons?i=aws" />
   </p>
+
+  ##### <div align="center"> Plataforma de Nuvem </div>
   </td>
   
   <td valign="top" width="20%">
-
-  ### <div align="center"> Sistema Operacional </div>
+  <br>
 
   <p align="center">
     <img src="https://skillicons.dev/icons?i=ubuntu" />
   </p>
+
+  ##### <div align="center"> Sistema Operacional </div>
   </td>
   
   <td valign="top" width="20%">
-
-  ### <div align="center"> Infraestrutura como Código </div>
+  <br>
 
   <p align="center">
     <img src="https://skillicons.dev/icons?i=terraform" />
   </p>
+
+  ##### <div align="center"> Infraestrutura como Código </div>
   </td>
 
   <td valign="top" width="20%">
-
-  ### <div align="center"> Containerização e Orquestração </div>
+  <br>
 
   <p align="center">
     <img src="https://skillicons.dev/icons?i=docker" />
   </p>
+
+  ##### <div align="center"> Containerização e Orquestração </div>
   </td>
   
   <td valign="top" width="20%">
-
-  ### <div align="center"> Servidor e Proxy Reverso </div>
+  <br>
 
   <p align="center">
   <img src="https://skillicons.dev/icons?i=nginx" />
   </p>
+
+  ##### <div align="center"> Servidor e Proxy Reverso </div>
   </td>
 </tr></table>
 
