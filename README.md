@@ -119,8 +119,8 @@ Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isol
 
 # 📖Guia de Instalação
 1. **Obtenha as Credenciais da AWS** <br>
-  Antes de começar a configurar o ambiente, você precisará das credenciais da AWS para acessar os serviços necessários. Se estiver utilizando um laboratório ou ambiente temporário, acesse o terminal execute o comando abaixo para exibir as credenciais: <br>
-    - **Atenção:** Essas credenciais podem mudar sempre que você iniciar um novo laboratório ou sessão. Certifique-se de obter as novas credenciais toda vez que começar um novo lab.
+  Antes de começar a configurar o ambiente, você precisará das credenciais da AWS para acessar os serviços necessários. Se estiver utilizando um laboratório ou ambiente temporário, acesse o terminal execute o comando abaixo para exibir as credenciais:
+    - **Atenção:** Essas credenciais podem mudar sempre que você iniciar um novo laboratório ou sessão. Certifique-se de obter as novas credenciais toda vez que começar um novo lab. <br>
     ```
     cat ~/.aws/credentials
     ```
@@ -141,10 +141,10 @@ Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isol
     4. **Default output format** <br>
       Deixe como json ou outro formato de sua preferência
     5. **(Opcional, se aplicável) Defina o Token da Sessão** <br>
-      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido. <br><br>
-      ```
-      aws configure set aws_session_token <<token>>
-      ``` 
+      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido.
+        ```
+        aws configure set aws_session_token <<token>>
+        ``` 
 4. **Inicialize o Terraform** <br>
   Com a AWS CLI configurada, o próximo passo é preparar o Terraform para gerenciar a infraestrutura. E para isso, precisamos baixar todos os provedores necessários e preparar o ambiente de trabalho para o Terraform. Na raiz do diretório do projeto, execute o comando:
     ``` 
@@ -159,12 +159,15 @@ Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isol
   O Terraform apresentará um resumo das mudanças que serão feitas. Revise as alterações e, se estiver de acordo, confirme digitando `yes` quando solicitado.
 
 # 💡Como Usar o Projeto?
+
 # 🔗Recursos Adicionais
 1. Aplicativos:
-  - Visual Studio Code: https://code.visualstudio.com/download
-  - DockerHub: https://www.docker.com/products/docker-desktop/
+    - Visual Studio Code: https://code.visualstudio.com/download
+    - DockerHub (Para Windows): https://www.docker.com/products/docker-desktop/
 
 2. Linguagens e pacotes:  
-  - Chocolatey: https://chocolatey.org/ 
-  - Terraform: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
-  - Credenciais do usuário Linux e Mac: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4
+    - Chocolatey (Para Windows): https://chocolatey.org/ 
+    - Terraform: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+
+3. Guias
+    - Alterar Credenciais do Usuário (Windows e Mac): https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4
