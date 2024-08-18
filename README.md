@@ -9,15 +9,64 @@
 </p>
 
 # 🔍Índice <!-- omit in toc -->
+- [Tecnologias](#tecnologias)
 - [Visão Geral](#visão-geral)
   - [Rede](#rede)
   - [Segurança](#segurança)
   - [Instâncias](#instâncias)
   - [Desenho da Arquitetura](#desenho-da-arquitetura)
-- [Tecnologias](#tecnologias)
 - [Guia de Instalação](#guia-de-instalação)
 - [Como Usar o Projeto?](#como-usar-o-projeto)
 - [Recursos Adicionais](#recursos-adicionais)
+
+# 💻Tecnologias
+<table align="center"><tr>
+  <td valign="top" width="20%">
+      
+  ### <div align="center"> Plataforma de Nuvem </div>
+      
+  <p align="center">
+    <img src="https://skillicons.dev/icons?i=aws" />
+  </p>
+  </td>
+  
+  <td valign="top" width="20%">
+
+  ### <div align="center"> Sistema Operacional </div>
+
+  <p align="center">
+    <img src="https://skillicons.dev/icons?i=ubuntu" />
+  </p>
+  </td>
+  
+  <td valign="top" width="20%">
+
+  ### <div align="center"> Infraestrutura como Código </div>
+
+  <p align="center">
+    <img src="https://skillicons.dev/icons?i=terraform" />
+  </p>
+  </td>
+
+  <td valign="top" width="20%">
+
+  ### <div align="center"> Containerização e Orquestração </div>
+
+  <p align="center">
+    <img src="https://skillicons.dev/icons?i=docker" />
+  </p>
+  </td>
+  
+  <td valign="top" width="20%">
+
+  ### <div align="center"> Servidor e Proxy Reverso </div>
+
+  <p align="center">
+  <img src="https://skillicons.dev/icons?i=nginx" />
+  </p>
+  </td>
+</tr></table>
+
 
 # 📝Visão Geral
 A arquitetura da Bubbles AWS Architecture foi projetada para oferecer uma solução robusta, segura e escalável para a hospedagem da <a href="https://github.com/Projeto-Bubbles/bubbles-website-app" target="_blank">Bubbles Website</a> e <a href="https://github.com/Projeto-Bubbles/bubbles-spring-api-backend" target="_blank">Bubbles API</a>. Combinando o poder da AWS e a automação do Terraform, este repositório fornece os arquivos necessários para a criação e configuração de uma infraestrutura completa que prioriza alta disponibilidade, balanceamento de carga e segurança. A arquitetura está organizada em três pilares fundamentais.
@@ -56,19 +105,13 @@ A arquitetura da Bubbles AWS Architecture foi projetada para oferecer uma soluç
 
 O diagrama acima ilustra a arquitetura da aplicação Bubbles, destacando a separação e segurança dos recursos em uma VPC (Virtual Private Cloud) na região Norte da Virgínia. A infraestrutura está dividida em sub-redes públicas e privadas, cada uma configurada para atender a diferentes partes da aplicação:
 
-- Sub-rede Pública (10.0.0.0/25): Hospeda os componentes do front-end e o balanceador de carga do Nginx, permitindo que os usuários acessem a aplicação através da internet. O Internet Gateway conecta essa sub-rede à internet, enquanto uma Tabela de Rotas Pública garante que o tráfego seja direcionado adequadamente. Esta sub-rede é protegida por um Grupo de Segurança Público, que controla o acesso aos recursos expostos. <br><br>
+- Sub-rede Pública (10.0.0.0/25): Hospeda os componentes do front-end e o balanceador de carga do Nginx, permitindo que os usuários acessem a aplicação através da internet. O Internet Gateway conecta essa sub-rede à internet, enquanto uma Tabela de Rotas Pública garante que o tráfego seja direcionado adequadamente. Esta sub-rede é protegida por um Grupo de Segurança Público, que controla o acesso aos recursos expostos. <br>
 
-- Sub-rede Privada (10.0.0.128/25): Destinada aos componentes críticos de back-end, como as instâncias de Spring Boot que processam a lógica da aplicação. O acesso à internet, quando necessário, é realizado através do NAT Gateway, mantendo os recursos protegidos de acessos externos diretos. A Tabela de Rotas Privada e as ACLs de Rede Privada (NACL) reforçam a segurança desta sub-rede. Os recursos desta área estão sob um Grupo de Segurança Privado que limita estritamente o tráfego permitido. <br><br>
+- Sub-rede Privada (10.0.0.128/25): Destinada aos componentes críticos de back-end, como as instâncias de Spring Boot que processam a lógica da aplicação. O acesso à internet, quando necessário, é realizado através do NAT Gateway, mantendo os recursos protegidos de acessos externos diretos. A Tabela de Rotas Privada e as ACLs de Rede Privada (NACL) reforçam a segurança desta sub-rede. Os recursos desta área estão sob um Grupo de Segurança Privado que limita estritamente o tráfego permitido. <br>
 
 - Interconexões e Segurança: As instâncias de front-end e back-end comunicam-se internamente, sendo o tráfego cuidadosamente filtrado por grupos de segurança específicos. O diagrama destaca também o uso de endereços IP elásticos, garantindo que os gateways de rede mantenham endereços IP consistentes, essenciais para a comunicação com o mundo exterior.
 
 Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isolando os diferentes componentes da aplicação conforme suas funções e necessidades de acesso, ao mesmo tempo em que proporciona alta disponibilidade e resiliência para a infraestrutura da aplicação.
-
-# 👨‍💻Tecnologias
-
-<div align="center">
-  <img src="https://skillicons.dev/icons?i=aws,ubuntu,terraform,docker,nginx,vim&theme=dark" />
-</div>
 
 # 📖Guia de Instalação
 # 💡Como Usar o Projeto?
