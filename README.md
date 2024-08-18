@@ -119,7 +119,7 @@ Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isol
 
 # 📖Guia de Instalação
 1. **Obtenha as Credenciais da AWS** <br>
-  Antes de começar a configurar o ambiente, você precisará das credenciais da AWS para acessar os serviços necessários. Se estiver utilizando um laboratório ou ambiente temporário, acesse o terminal execute o comando abaixo para exibir as credenciais:
+  Antes de começar a configurar o ambiente, você precisará das credenciais da AWS para acessar os serviços necessários. Se estiver utilizando um laboratório ou ambiente temporário, acesse o terminal execute o comando abaixo para exibir as credenciais: <br>
     - **Atenção:** Essas credenciais podem mudar sempre que você iniciar um novo laboratório ou sessão. Certifique-se de obter as novas credenciais toda vez que começar um novo lab.
     ```
     cat ~/.aws/credentials
@@ -141,7 +141,7 @@ Essa arquitetura foi desenhada para maximizar a segurança e a eficiência, isol
     4. **Default output format** <br>
       Deixe como json ou outro formato de sua preferência
     5. **(Opcional, se aplicável) Defina o Token da Sessão** <br>
-      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido. <br>
+      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido. <br><br>
       ```
       aws configure set aws_session_token <<token>>
       ``` 
