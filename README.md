@@ -215,6 +215,23 @@
 
 
 # 💡Como Usar o Projeto?
+Após configurar o ambiente na nuvem com sucesso, você pode começar a usar a infraestrutura provisionada para hospedar suas aplicações. Abaixo estão alguns exemplos de como aproveitar os recursos e funcionalidades fornecidos pelo Bubbles AWS Architecture:
+
+### 🖌️Implantação do Front-End
+  * Upload de Código: Faça o upload do seu código front-end (HTML, CSS, JavaScript) para as instâncias EC2 configuradas para o front-end. Utilize o SCP ou o Git para transferir os arquivos para o servidor.
+  * Configuração do Nginx: O Nginx já está pré-configurado como balanceador de carga para distribuir o tráfego entre as instâncias. Você pode ajustar as configurações no arquivo nginx.conf se necessário.
+
+### 🫧Implantando a API Back-End
+  * Deploy da API: Faça o deploy da sua API nas instâncias de back-end, utilizando ferramentas como Jenkins ou simplesmente configurando o CI/CD no seu repositório GitHub para deployment automático.
+  * Configuração do Load Balancer: O Load Balancer do back-end foi configurado para distribuir as requisições entre as instâncias de back-end, assegurando alta disponibilidade. Verifique a saúde das instâncias via AWS Console.
+### 📈Monitoramento e Escalabilidade
+  * Escalabilidade: Se houver necessidade de escalar a aplicação, você pode ajustar a quantidade de instâncias diretamente pelo Terraform ou pelo AWS Auto Scaling. A arquitetura está preparada para suportar esse tipo de ajuste.
+### 👷🏼Testes e Verificação
+  * Teste de Conectividade: Verifique se os endpoints da sua aplicação (front-end e API) estão acessíveis e funcionando conforme o esperado. Utilize ferramentas como curl ou Postman para testar os endpoints e verificar as respostas.
+  * Auditoria de Segurança: Execute auditorias de segurança para garantir que as políticas de grupo de segurança e ACLs estejam devidamente configuradas. Utilize o AWS Inspector ou outras ferramentas de segurança.
+### 🔨Atualizações e Manutenção
+  * Atualização de Infraestrutura: Para modificar ou atualizar a infraestrutura, edite os arquivos .tf e aplique as mudanças usando: ```terraform apply```. Isso permitirá que você adicione novos recursos ou altere a configuração existente sem afetar a disponibilidade do sistema.
+  * Manutenção Programada: Configure janelas de manutenção para aplicar patches de segurança ou atualizar o sistema operacional das instâncias. Utilize o AWS Systems Manager para automação dessas tarefas.
 
 # 🔗Recursos Adicionais
 ### 🔧Ferramentas
