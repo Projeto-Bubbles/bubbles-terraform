@@ -1,29 +1,29 @@
 <p align="center">
-  <img width="100px" src="assets/bubbles_logo.png" align="center" alt="Bubbles Logo" />
+  <img width="100px" src="../assets/bubbles_logo.png" align="center" alt="Bubbles Logo" />
   <h2 align="center">Bubbles AWS Architecture</h2>
-  <p align="center">Segurança e eficiência com AWS e Terraform para sua aplicação!</p>
+  <p align="center">Security and efficiency with AWS e Terraform for your application!</p>
 </p>
 
 <p align="center">
-  <a href="#">Português</a> · <a href="/docs/README_EN.md">English</a>
+  <a href="../README.md">Portuguese</a> · <a href="#">English</a>
 </p>
 
-# 🔍Índice <!-- omit in toc -->
-- [Tecnologias](#tecnologias)
-- [Visão Geral](#visão-geral)
-  - [Rede](#rede)
-  - [Segurança](#segurança)
-  - [Instâncias](#instâncias)
-  - [Desenho da Arquitetura](#desenho-da-arquitetura)
-- [Guia de Instalação](#guia-de-instalação)
+# 🔍Summary <!-- omit in toc -->
+- [Technologies](#technologies)
+- [Overview](#overview)
+  - [Network](#network)
+  - [Security](#security)
+  - [Instances](#instances)
+  - [Architecture Design](#architecture-design)
+- [Installation Guide](#installation-guide)
   - [Chocolatey](#chocolatey)
-- [Como Usar o Projeto?](#como-usar-o-projeto)
-- [Recursos Adicionais](#recursos-adicionais)
-  - [Ferramentas](#ferramentas)
-  - [Linguagens e Pacotes](#linguagens-e-pacotes)
-  - [Guias de Referência](#guias-de-referência)
+- [How to Use the Project?](#how-to-use-the-project)
+- [Additional Resources](#additional-resources)
+  - [Tools](#tools)
+  - [Languages and Packages](#languages-and-packages)
+  - [Reference Guide](#reference-guide)
 
-# 💻Tecnologias
+# 💻Technologies
 <table align="center"><tr>
   <td valign="top" width="20%">
 
@@ -72,10 +72,10 @@
 </tr></table>
 
 
-# 📝Visão Geral
+# 📝Overview
   A Bubbles AWS Architecture foi projetada para oferecer uma solução robusta, segura e escalável para a hospedagem da <a href="https://github.com/Projeto-Bubbles/bubbles-website-app" target="_blank">Bubbles Website</a> e <a href="https://github.com/Projeto-Bubbles/bubbles-spring-api-backend" target="_blank">Bubbles API</a>. Combinando o poder da AWS e a automação do Terraform, este repositório fornece os arquivos necessários para a criação e configuração de uma infraestrutura completa que prioriza alta disponibilidade, balanceamento de carga e segurança. A arquitetura está organizada em três pilares fundamentais.
 
-### **🛜Rede**
+### **🛜Network**
   Garante o isolamento, a conectividade e o roteamento seguros e eficientes dos recursos.
 
   * **VPC**: Define o espaço de rede isolado na AWS onde todos os recursos serão executados.
@@ -90,13 +90,13 @@
   * **Elastic IP da Instância Gateway**: Garante que a istância Gateway tenha um endereço IP consistente para comunicação externa.
   * **ACLs de Rede**: Atuam como um firewall adicional para as sub-redes, controlando o tráfego de rede com base em regras específicas, adicionando uma camada extra de segurança.
 
-### **🔒Segurança**
+### **🔒Security**
   Implementa políticas rigorosas para proteger tanto o front-end quanto o back-end contra ameaças.
 
   * **Grupo de segurança público**: Permite tráfego HTTP, HTTPS, SSH e tráfego na porta 8080 de qualquer lugar.
   * **Grupo de segurança privado**: Permite tráfego HTTP, SSH e tráfego na porta 8080 de qualquer lugar.
 
-### **💾Instâncias**
+### **💾Instances**
   Gerencia a execução dos componentes da aplicação, assegurando a distribuição adequada de recursos e o desempenho otimizado.
 
   * **Gateway (Nginx)**: Balanceador de carga do front-end, direciona o trafégo para o load balancer do back-end. Possui um IP Elástico.
@@ -104,10 +104,10 @@
   * **Load Balancer do Back-End**: Distribui as requisições recebidas entre as instâncias backend, garantindo alta disponibilidade e escalabilidade para a API.
   * **Back-End (2 Instâncias)**: Executam a lógica da aplicação, processando dados, interagindo com o banco de dados e fornecendo respostas para os frontends.
 
-### **🎨Desenho da Arquitetura**
+### **🎨Architecture Design**
   Desenhado para maximizar a segurança e a eficiência, isolando os diferentes componentes da aplicação conforme suas funções e necessidades de acesso, ao mesmo tempo em que proporciona alta disponibilidade e resiliência para a infraestrutura da aplicação.
 
-  <img src="assets/diagrama_de_arquitetura.png" />
+  <img src="../assets/diagrama_de_arquitetura.png" />
 
   O diagrama acima ilustra a arquitetura da aplicação Bubbles, destacando a separação e segurança dos recursos em uma VPC (Virtual Private Cloud) na região Norte da Virgínia. A infraestrutura está dividida em sub-redes públicas e privadas, cada uma configurada para atender a diferentes partes da aplicação:
 
@@ -117,7 +117,7 @@
 
   - Interconexões e Segurança: As instâncias de front-end e back-end comunicam-se internamente, sendo o tráfego cuidadosamente filtrado por grupos de segurança específicos. O diagrama destaca também o uso de endereços IP elásticos, garantindo que os gateways de rede mantenham endereços IP consistentes, essenciais para a comunicação com o mundo exterior.
 
-# 📖Guia de Instalação
+# 📖Installation Guide
   Para este tutorial, assumimos que o Terraform e o AWS CLI já estão instalados e configurados em sua máquina. Caso precise de instruções de instalação, consulte a seção [Recursos Adicionais](#recursos-adicionais) no final do documento.
   
   * **Nota:** Se você instalou o Terraform via Chocolatey (Gerenciador de Pacotes para Windows), enfrentou problemas com a instalação tradicional no Windows, ou deseja testar uma abordagem alternativa, siga as instruções específicas a partir da seção [Chocolatey](#chocolatey). Esta etapa é opcional e depende do seu ambiente de configuração.
@@ -214,7 +214,7 @@
   O Terraform apresentará um resumo das mudanças que serão feitas. Revise as alterações e, se estiver de acordo, confirme digitando `yes` quando solicitado.    
 
 
-# 💡Como Usar o Projeto?
+# 💡How to Use the Project?
 Após configurar o ambiente na nuvem com sucesso, você pode começar a usar a infraestrutura provisionada para hospedar suas aplicações. Abaixo estão alguns exemplos de como aproveitar os recursos e funcionalidades fornecidos pelo Bubbles AWS Architecture:
 
 ### 🖌️Implantação do Front-End
@@ -233,15 +233,15 @@ Após configurar o ambiente na nuvem com sucesso, você pode começar a usar a i
   * Atualização de Infraestrutura: Para modificar ou atualizar a infraestrutura, edite os arquivos .tf e aplique as mudanças usando: ```terraform apply```. Isso permitirá que você adicione novos recursos ou altere a configuração existente sem afetar a disponibilidade do sistema.
   * Manutenção Programada: Configure janelas de manutenção para aplicar patches de segurança ou atualizar o sistema operacional das instâncias. Utilize o AWS Systems Manager para automação dessas tarefas.
 
-# 🔗Recursos Adicionais
-### 🔧Ferramentas
+# 🔗Additional Resources
+### 🔧Tools
   - <a href="https://code.visualstudio.com/download">Visual Studio Code</a>
   - <a href="https://www.docker.com/products/docker-desktop/">DockerHub (Windows)</a>
 
-### 📦Linguagens e Pacotes
+### 📦Languages and Packages
   - <a href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli">Terraform</a>
   - <a href="https://chocolatey.org/">Chocolatey (Windows)</a> 
   - <a href="https://docs.aws.amazon.com/pt_br/cli/latest/userguide/getting-started-install.html">AWS CLI</a>
 
-### 📖Guias de Referência
+### 📖Reference Guide
   - <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4">Alterar Credenciais do Usuário (Windows e Mac)</a>
