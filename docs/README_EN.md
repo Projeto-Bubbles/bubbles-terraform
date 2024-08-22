@@ -27,16 +27,16 @@
 <table align="center"><tr>
   <td valign="top" width="20%">
 
-  #### <div align="center"> Plataforma de Nuvem </div>
+  #### <div align="center">Cloud Platform</div>
   <p align="center">
     <img src="https://skillicons.dev/icons?i=aws" />
   </p>
   <br>
   </td>
-  
+
   <td valign="top" width="20%">
 
-  #### <div align="center"> Sistema Operacional </div>
+  #### <div align="center">Operating System</div>
   <p align="center">
     <img src="https://skillicons.dev/icons?i=ubuntu" />
   </p>
@@ -45,7 +45,7 @@
   
   <td valign="top" width="20%">
 
-  #### <div align="center"> Infraestrutura como Código </div>
+  #### <div align="center">Infrastructure as Code</div>
   <p align="center">
     <img src="https://skillicons.dev/icons?i=terraform" />
   </p>
@@ -54,7 +54,7 @@
 
   <td valign="top" width="20%">
 
-  #### <div align="center"> Containerização e Orquestração </div>
+  #### <div align="center">Containerization and Orchestration</div>
   <p align="center">
     <img src="https://skillicons.dev/icons?i=docker" />
   </p>
@@ -63,7 +63,7 @@
   
   <td valign="top" width="20%">
 
-  #### <div align="center"> Servidor Web e Proxy Reverso </div>
+  #### <div align="center">Web Server and Reverse Proxy</div>
   <p align="center">
     <img src="https://skillicons.dev/icons?i=nginx" />
   </p>
@@ -73,36 +73,36 @@
 
 
 # 📝Overview
-  A Bubbles AWS Architecture foi projetada para oferecer uma solução robusta, segura e escalável para a hospedagem da <a href="https://github.com/Projeto-Bubbles/bubbles-website-app" target="_blank">Bubbles Website</a> e <a href="https://github.com/Projeto-Bubbles/bubbles-spring-api-backend" target="_blank">Bubbles API</a>. Combinando o poder da AWS e a automação do Terraform, este repositório fornece os arquivos necessários para a criação e configuração de uma infraestrutura completa que prioriza alta disponibilidade, balanceamento de carga e segurança. A arquitetura está organizada em três pilares fundamentais.
+  The Bubbles AWS Architecture is designed to provide a robust, secure and escalable solution for hosting the <a href="https://github.com/Projeto-Bubbles/bubbles-website-app" target="_blank">Bubbles Website</a> and <a href="https://github.com/Projeto-Bubbles/bubbles-spring-api-backend" target="_blank">Bubbles API</a>. By combining the power of AWS with Terraform automation, this repository supplies the necessary files to create and configure a complete infrastructure that prioritizes high availability, load balancing and security. The architecture is organized around three fundamental pillars.
 
 ### **🛜Network**
-  Garante o isolamento, a conectividade e o roteamento seguros e eficientes dos recursos.
+  Ensures secure and efficient isolation, connectivity and routing of resources.
 
-  * **VPC**: Define o espaço de rede isolado na AWS onde todos os recursos serão executados.
-  * **Sub-rede pública**: Hospeda recursos acessíveis pela internet, como o gateway Nginx e as instâncias de front-end.
-  * **Sub-rede privada**: Hospeda recursos internos, protegidos do acesso direto da internet, como as instâncias de back-end e o load balancer do back-end.
-  * **Internet Gateway**: Conecta a VPC à internet pública, permitindo que os recursos públicos sejam acessíveis.
-  * **Tabela de rota pública**: Direciona o tráfego para a internet através do Internet Gateway.
-  * **Tabela de rota privada**: Direciona o tráfego para a internet através do NAT Gateway.
-  * **Associações de Tabelas de Rota**: Vinculam as tabelas de rota às sub-redes correspondentes, definindo como o tráfego flui dentro de cada sub-rede.
-  * **NAT Gateway**: Permite que as instâncias na sub-rede privada acessem a internet.
-  * **Elastic IP do NAT Gateway**: Garante que o NAT Gateway tenha um endereço IP consistente para comunicação externa.
-  * **Elastic IP da Instância Gateway**: Garante que a istância Gateway tenha um endereço IP consistente para comunicação externa.
-  * **ACLs de Rede**: Atuam como um firewall adicional para as sub-redes, controlando o tráfego de rede com base em regras específicas, adicionando uma camada extra de segurança.
+  * **VPC:** Defines the isolated network space on AWS where all resources will run.
+  * **Public Subnet:** Hosts internet-accessible resources, such as Nginx gateway and front-end instances.
+  * **Private Subnet:** Hosts internal resources, protected from direct internet access, such as back-end instances and the back-end load balancer.
+  * **Internet Gateway:** Connects the VPC to the public internet, allowing public resources to be accessible.
+  * **Public Route Table:** Directs traffic to the internet through the Internet Gateway.
+  * **Private Route Table:** Directs traffic to the internet through the NAT Gateway.
+  * **Route Table Associations:** Link the route tables to the corresponding subnets, defining how traffic flows within each subnet.
+  * **NAT Gateway:** Enables instances in the private subnet to access the internet.
+  * **NAT Gateway Elastic IP:** Ensures that the NAT Gateway has a consistent IP address for external communication.
+  * **Gateway Instance Elastic IP:** Ensures that the Gateway instance has a consistent IP address for external communication.
+  * **Network ACLs:** Act as an additional firewall for the subnets, controlling network traffic based on specific rules, adding an extra layer of security.
 
 ### **🔒Security**
-  Implementa políticas rigorosas para proteger tanto o front-end quanto o back-end contra ameaças.
+  Implements strict policies to protect both the front-end and back-end against threats.
 
-  * **Grupo de segurança público**: Permite tráfego HTTP, HTTPS, SSH e tráfego na porta 8080 de qualquer lugar.
-  * **Grupo de segurança privado**: Permite tráfego HTTP, SSH e tráfego na porta 8080 de qualquer lugar.
+  * **Public Security Group:** Allows HTTP, HTTPS, SSH and port 8080 traffic from anywhere.
+  * **Private Security Group:** Allows HTTP, SSH and port 8080 traffic from anywhere.
 
 ### **💾Instances**
-  Gerencia a execução dos componentes da aplicação, assegurando a distribuição adequada de recursos e o desempenho otimizado.
+  Manages the execution of application components, ensuring proper resource allocation and optimized performance.
 
-  * **Gateway (Nginx)**: Balanceador de carga do front-end, direciona o trafégo para o load balancer do back-end. Possui um IP Elástico.
-  * **Front-End (2 Instâncias)**: Hospedam a interface do usuário da aplicação, servindo o conteúdo estático e interagindo com o backend.
-  * **Load Balancer do Back-End**: Distribui as requisições recebidas entre as instâncias backend, garantindo alta disponibilidade e escalabilidade para a API.
-  * **Back-End (2 Instâncias)**: Executam a lógica da aplicação, processando dados, interagindo com o banco de dados e fornecendo respostas para os frontends.
+  * **Gateway (Nginx):** Routes traffic to the back-end load balancer. It has an elastic IP.
+  * **Front-End (2 Instances):** Host the application's user interface, serving static content and interacting with the back-end.
+  * **Load Balancer (Nginx):** Distributes incoming requests among the back-end instances, ensuring high availability and scalability for the API.
+  * **Back-End (2 Instances):** Execute the application logic, processing data, interacting with the database and providing responses to the front-end.
 
 ### **🎨Architecture Design**
   Desenhado para maximizar a segurança e a eficiência, isolando os diferentes componentes da aplicação conforme suas funções e necessidades de acesso, ao mesmo tempo em que proporciona alta disponibilidade e resiliência para a infraestrutura da aplicação.
