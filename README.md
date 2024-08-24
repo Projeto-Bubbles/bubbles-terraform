@@ -107,7 +107,7 @@
 ### **🎨Desenho da Arquitetura**
   Desenhado para maximizar a segurança e a eficiência, isolando os diferentes componentes da aplicação conforme suas funções e necessidades de acesso, ao mesmo tempo em que proporciona alta disponibilidade e resiliência para a infraestrutura da aplicação.
 
-  <img src="assets/diagrama_de_arquitetura.png" />
+  <img src="assets/diagrama_de_arquitetura.png" alt="Desenho da Arquitetura"/>
 
   O diagrama acima ilustra a arquitetura da aplicação Bubbles, destacando a separação e segurança dos recursos em uma VPC (Virtual Private Cloud) na região Norte da Virgínia. A infraestrutura está dividida em sub-redes públicas e privadas, cada uma configurada para atender a diferentes partes da aplicação:
 
@@ -120,7 +120,7 @@
 # 📖Guia de Instalação
   Para este tutorial, assumimos que o Terraform e o AWS CLI já estão instalados e configurados em sua máquina. Caso precise de instruções de instalação, consulte a seção [Recursos Adicionais](#recursos-adicionais) no final do documento.
   
-  * **Nota:** Se você instalou o Terraform via Chocolatey (Gerenciador de Pacotes para Windows), enfrentou problemas com a instalação tradicional no Windows, ou deseja testar uma abordagem alternativa, siga as instruções específicas a partir da seção [Chocolatey](#chocolatey). Esta etapa é opcional e depende do seu ambiente de configuração.
+  * **Atenção:** Se você instalou o Terraform via Chocolatey (Gerenciador de Pacotes para Windows), enfrentou problemas com a instalação tradicional no Windows, ou deseja testar uma abordagem alternativa, siga as instruções específicas a partir da seção [Chocolatey](#chocolatey). Esta etapa é opcional e depende do seu ambiente de configuração.
 
 1. **Obtenha as Credenciais da AWS** <br>
   Antes de começar a configurar o ambiente, você precisará das credenciais da AWS para acessar os serviços necessários. Se estiver utilizando um laboratório ou ambiente temporário, acesse o terminal execute o comando abaixo para exibir as credenciais:
@@ -128,9 +128,9 @@
     ```
     cat ~/.aws/credentials
     ```
+
 2. **Configure o AWS CLI** <br>
   Com as credenciais em mãos, você precisará configurar a AWS CLI (Command Line Interface) para interagir com a AWS. Isso pode ser feito usando qualquer terminal, como PowerShell, Bash ou CMD. Digite o comando abaixo no terminal e siga as instruções para inserir a Access Key, Secret Key e a região desejada:
-
     ```
     aws configure
     ```
@@ -145,20 +145,23 @@
     4. **Default output format** <br>
       Deixe como json ou outro formato de sua preferência
     5. **(Opcional, se aplicável) Defina o Token da Sessão** <br>
-      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido.<br><br>
+      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua `<<token>>` pelo valor do token de sessão fornecido.<br><br>
         ```
         aws configure set aws_session_token <<token>>
         ``` 
+
 4. **Inicialize o Terraform** <br>
   Com a AWS CLI configurada, o próximo passo é preparar o Terraform para gerenciar a infraestrutura. E para isso, precisamos baixar todos os provedores necessários e preparar o ambiente de trabalho para o Terraform. Na raiz do diretório do projeto, execute o comando:
     ``` 
     terraform init
     ```    
+
 5. **Aplique a Configuração do Terraform** <br>
   Após a inicialização, você está pronto para criar ou atualizar a infraestrutura na AWS. Para aplicar as configurações definidas nos arquivos .tf e provisionar a infraestrutura na AWS, use o comando:
     ```
     terraform apply
     ```
+
 6. **Revise e Confirme** <br>
   O Terraform apresentará um resumo das mudanças que serão feitas. Revise as alterações e, se estiver de acordo, confirme digitando `yes` quando solicitado.
 
@@ -186,9 +189,9 @@
       ```
       cat ~/.aws/credentials
       ```
+
   5. **Configurando Credenciais no Windows** <br>
     Navegue até o diretório `C:\Users\[seu_nome_de_usuario]\.aws` pelo explorador de arquivos ou terminal. Nesse local, você encontrará dois arquivos: config e credentials. Edite os arquivos conforme descrito abaixo:
-
       * `config`
         ```
           [default]
@@ -199,6 +202,7 @@
         ```
           <<credenciais-da-aws>>
         ```
+
   6. **Inicializando Terraform** <br>
     Agora, pelo terminal, acesse o diretório até onde o arquivo main.tf está localizado. Se estiver usando o Visual Studio Code, você pode navegar facilmente até o diretório. E inicialize o terraform com o comando:
       ```
@@ -210,9 +214,9 @@
       ```
       terraform apply
       ```
+
   8. **Revise e Confirme** <br>
   O Terraform apresentará um resumo das mudanças que serão feitas. Revise as alterações e, se estiver de acordo, confirme digitando `yes` quando solicitado.    
-
 
 # 💡Como Usar o Projeto?
 Após configurar o ambiente na nuvem com sucesso, você pode começar a usar a infraestrutura provisionada para hospedar suas aplicações. Abaixo estão alguns exemplos de como aproveitar os recursos e funcionalidades fornecidos pelo Bubbles AWS Architecture:

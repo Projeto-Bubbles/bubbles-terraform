@@ -105,90 +105,93 @@
   * **Back-End (2 Instances):** Execute the application logic, processing data, interacting with the database and providing responses to the front-end.
 
 ### **🎨Architecture Design**
-  Desenhado para maximizar a segurança e a eficiência, isolando os diferentes componentes da aplicação conforme suas funções e necessidades de acesso, ao mesmo tempo em que proporciona alta disponibilidade e resiliência para a infraestrutura da aplicação.
+  Designed to maximize security and efficiency by isolating different application components according to their functions and access needs, while also providing high availability and resilience for the application's infrastructure.
 
-  <img src="../assets/diagrama_de_arquitetura.png" />
+  <img src="../assets/architecture_design.png" alt="Architecture Design"/>
 
-  O diagrama acima ilustra a arquitetura da aplicação Bubbles, destacando a separação e segurança dos recursos em uma VPC (Virtual Private Cloud) na região Norte da Virgínia. A infraestrutura está dividida em sub-redes públicas e privadas, cada uma configurada para atender a diferentes partes da aplicação:
+  
+  The diagram above illustrates the Bubbles application architecture, highlighting the separation and security of resources within a VPC (Virtual Private Cloud) in the Northern Virginia region. The infrastructure is divided into public and private subnets, each configured to serve different parts of the application:
 
-  - Sub-rede Pública (10.0.0.0/25): Hospeda os componentes do front-end e o balanceador de carga do Nginx, permitindo que os usuários acessem a aplicação através da internet. O Internet Gateway conecta essa sub-rede à internet, enquanto uma Tabela de Rotas Pública garante que o tráfego seja direcionado adequadamente. Esta sub-rede é protegida por um Grupo de Segurança Público, que controla o acesso aos recursos expostos. <br>
+  - Public Subnet (10.0.0.0/25): Hosts the front-end components and the Nginx load balancer, allowing users to access the application via the internet. The Internet Gateway connects this subnet to the internet, while a Public Route Table ensures traffic is properly routed. This subnet is protected by a Public Security Group, which controls access to the exposed resources. <br>
 
-  - Sub-rede Privada (10.0.0.128/25): Destinada aos componentes críticos de back-end, como as instâncias de Spring Boot que processam a lógica da aplicação. O acesso à internet, quando necessário, é realizado através do NAT Gateway, mantendo os recursos protegidos de acessos externos diretos. A Tabela de Rotas Privada e as ACLs de Rede Privada (NACL) reforçam a segurança desta sub-rede. Os recursos desta área estão sob um Grupo de Segurança Privado que limita estritamente o tráfego permitido. <br>
+  - Private Subnet (10.0.0.128/25): Dedicated to critical back-end components, such as the Spring Boot instances that handle the application logic. Internet access, when necessary, is provided through the NAT Gateway, keeping resources protected from direct external access. The Private Route Table and Private Network ACLs (NACL) reinforce the security of this subnet. Resources in this area are governed by a Private Security Group that strictly limits allowed traffic. <br>
 
-  - Interconexões e Segurança: As instâncias de front-end e back-end comunicam-se internamente, sendo o tráfego cuidadosamente filtrado por grupos de segurança específicos. O diagrama destaca também o uso de endereços IP elásticos, garantindo que os gateways de rede mantenham endereços IP consistentes, essenciais para a comunicação com o mundo exterior.
+  - Interconnections and Security: The front-end and back-end instances communicate internally, with traffic carefully filtered by specific security groups. The diagram also highlights the use of Elastic IPs, ensuring that network gateways maintain consistent IP addresses, which are essential for external communication.
 
 # 📖Installation Guide
-  Para este tutorial, assumimos que o Terraform e o AWS CLI já estão instalados e configurados em sua máquina. Caso precise de instruções de instalação, consulte a seção [Recursos Adicionais](#recursos-adicionais) no final do documento.
-  
-  * **Nota:** Se você instalou o Terraform via Chocolatey (Gerenciador de Pacotes para Windows), enfrentou problemas com a instalação tradicional no Windows, ou deseja testar uma abordagem alternativa, siga as instruções específicas a partir da seção [Chocolatey](#chocolatey). Esta etapa é opcional e depende do seu ambiente de configuração.
+  For this tutorial, we assume that Terraform and AWS CLI are already installed and configured on your machine. If you need installation instructions, please refer to the [Additional Resources](#additional-resources) section at the end of the document.
 
-1. **Obtenha as Credenciais da AWS** <br>
-  Antes de começar a configurar o ambiente, você precisará das credenciais da AWS para acessar os serviços necessários. Se estiver utilizando um laboratório ou ambiente temporário, acesse o terminal execute o comando abaixo para exibir as credenciais:
-    - **Atenção:** Essas credenciais podem mudar sempre que você iniciar um novo laboratório ou sessão. Certifique-se de obter as novas credenciais toda vez que começar um novo lab. <br><br>
+  * **Warning:** If you installed Terraform via Chocolatey (Windows Package Manager), encountered issues with the traditional Windows installation, or want to try an alternative approach, follow the specific instructions in the [Chocolatey](#chocolatey) section. This step is optional and depends on your setup environment.
+
+1. **Obtain AWS Credentials** <br>
+  Before starting to set up the environment, you will need AWS credentials to access the required services. If you are using a lab or temporary environment, access the terminal and run the command below to display the credentials:
+    - **Warning:** These credentials may change each time you start a new lab or session. Make sure to obtain new credentials every time you begin a new lab. <br><br>
     ```
     cat ~/.aws/credentials
     ```
-2. **Configure o AWS CLI** <br>
-  Com as credenciais em mãos, você precisará configurar a AWS CLI (Command Line Interface) para interagir com a AWS. Isso pode ser feito usando qualquer terminal, como PowerShell, Bash ou CMD. Digite o comando abaixo no terminal e siga as instruções para inserir a Access Key, Secret Key e a região desejada:
 
+2. **Configure the AWS CLI** <br>
+  With your credentials ready, you need to configure the AWS CLI (Command Line Interface) to interact with AWS. This can be done using any terminal, such as PowerShell, Bash, or CMD. Enter the command below in the terminal and follow the prompts to input the Access Key, Secret Key, and desired region:
     ```
     aws configure
     ```
 
-3. **Definindo Chaves, Região, Sessão e Token** 
+3. **Setting Keys, Region, Session, and Token**
     1. **AWS Access Key ID** <br>
-      Insira a chave de acesso obtida no passo anterior.
+      Enter the access key obtained in the previous step.
     2. **AWS Secret Access Key** <br>
-      Insira a chave secreta correspondente.
-    3. **Default region name** <br>
-      Especifique a região (ex.: us-east-1).
+      Enter the corresponding secret key.
+    3. **Default region name** <br> 
+      Specify the region (e.g., us-east-1).
     4. **Default output format** <br>
-      Deixe como json ou outro formato de sua preferência
-    5. **(Opcional, se aplicável) Defina o Token da Sessão** <br>
-      Se você precisar de um token de sessão (comumente usado em ambientes temporários ou seguros), use o comando abaixo para configurar e substitua <<token>> pelo valor do token de sessão fornecido.<br><br>
+      Set to json or another format of your choice.
+    5. **(Optional, if applicable) Set the Session Token** <br>
+      If you need a session token (commonly used in temporary or secure environments), use the command below to configure it, and replace `<<token>>` with the session token value provided.<br><br>
         ```
         aws configure set aws_session_token <<token>>
         ``` 
-4. **Inicialize o Terraform** <br>
-  Com a AWS CLI configurada, o próximo passo é preparar o Terraform para gerenciar a infraestrutura. E para isso, precisamos baixar todos os provedores necessários e preparar o ambiente de trabalho para o Terraform. Na raiz do diretório do projeto, execute o comando:
+
+4. **Initialize Terraform** <br> 
+  With the AWS CLI configured, the next step is to prepare Terraform to manage the infrastructure. To do this, you need to download all necessary providers and set up the working environment for Terraform. In the root directory of your project, run the following command:
     ``` 
     terraform init
     ```    
-5. **Aplique a Configuração do Terraform** <br>
-  Após a inicialização, você está pronto para criar ou atualizar a infraestrutura na AWS. Para aplicar as configurações definidas nos arquivos .tf e provisionar a infraestrutura na AWS, use o comando:
+
+5. **Apply Terraform Configuration** <br>
+  After initialization, you are ready to create or update the infrastructure on AWS. To apply the configurations defined in the .tf files and provision the infrastructure on AWS, use the following command:
     ```
     terraform apply
     ```
-6. **Revise e Confirme** <br>
-  O Terraform apresentará um resumo das mudanças que serão feitas. Revise as alterações e, se estiver de acordo, confirme digitando `yes` quando solicitado.
+
+6. **Review and Confirm** <br>
+  Terraform will present a summary of the changes that will be made. Review the changes, and if you agree, confirm by typing `yes` when prompted.
 
   ### 🍫Chocolatey
-  Para gerenciar a instalação do Terraform usando Chocolatey, siga as etapas abaixo. Recomendamos utilizar o <a href="https://code.visualstudio.com/download">Visual Studio Code</a> para facilitar a visualização do código Terraform e a execução de comandos no terminal integrado. Note que essa etapa não elimina a necessidade de instalar o <a href="https://docs.aws.amazon.com/pt_br/cli/latest/userguide/getting-started-install.html">AWS CLI</a>.
-
-  1. **Configurando Políticas de Execução do Windows** <br>
-    Para executar os comandos do Chocolatey e do Terraform, é necessário que as políticas de execução do Windows estejam configuradas corretamente. Certifique-se de que as políticas estejam conforme a imagem abaixo:
-    <img src="assets/politicas_de_execucao.jpg" alt="políticas de execução do Windows">
-
-      - Caso não estejam configuradas dessa forma, siga <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4">este guia</a> para ajustá-las.
+  To manage the installation of Terraform using Chocolatey, follow the steps below. We recommend using <a href="https://code.visualstudio.com/download">Visual Studio Code</a> to facilitate viewing Terraform code and running commands in the integrated terminal. Note that this step does not eliminate the need to install the <a href="https://docs.aws.amazon.com/pt_br/cli/latest/userguide/getting-started-install.html">AWS CLI</a>.
   
-  2. **Instalando o Chocolatey** <br>
-    Instale o Chocolatey seguindo as instruções no <a href="https://chocolatey.org/">site oficial</a>. 
+  1. **Configuring Windows Execution Policies** <br> 
+    To run Chocolatey and Terraform commands, ensure that Windows execution policies are set up correctly. The policies should be configured as shown in the image below: <img src="../assets/politicas_de_execucao.jpg" alt="Windows execution policies">
 
-  3. **Instalando o Terraform com Chocolatey** <br>
-    Abra o terminal do Windows (PowerShell, Bash, Terminal integrado do Visual Studio Code, etc) e execute o seguinte comando para instalar o Terraform:
+      - If they are not configured this way, follow <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.4">this guide</a> to adjust them.
+
+  2. **Installing Chocolatey** <br> 
+    Install Chocolatey by following the instructions on the <a href="https://chocolatey.org/">official website</a>.
+  
+  3. **Installing Terraform with Chocolatey** <br> 
+    Open the Windows terminal (PowerShell, Bash, Visual Studio Code integrated terminal, etc.) and run the following command to install Terraform:
       ```
       choco install terraform
       ```
-  
-  4. **Obtenha as Credenciais da AWS** <br>
-    No terminal do laboratório da AWS, execute o comando abaixo para exibir as suas credenciais:
-      - **Atenção:** Essas credenciais podem mudar sempre que você iniciar um novo laboratório ou sessão. Certifique-se de obter as novas credenciais toda vez que começar um novo lab. <br><br>
+
+  4. **Obtain AWS Credentials** <br> 
+    In the AWS lab terminal, run the command below to display your credentials:
+      - **Warning:** These credentials may change each time you start a new lab or session. Make sure to obtain new credentials every time you begin a new lab. <br><br>
       ```
       cat ~/.aws/credentials
       ```
-  5. **Configurando Credenciais no Windows** <br>
-    Navegue até o diretório `C:\Users\[seu_nome_de_usuario]\.aws` pelo explorador de arquivos ou terminal. Nesse local, você encontrará dois arquivos: config e credentials. Edite os arquivos conforme descrito abaixo:
 
+  5. **Configuring Credentials on Windows** <br> 
+    Navigate to the directory `C:\Users\[your_username]\.aws` using File Explorer or the terminal. In this location, you will find two files: config and credentials. Edit the files as described below:
       * `config`
         ```
           [default]
@@ -199,20 +202,21 @@
         ```
           <<credenciais-da-aws>>
         ```
-  6. **Inicializando Terraform** <br>
-    Agora, pelo terminal, acesse o diretório até onde o arquivo main.tf está localizado. Se estiver usando o Visual Studio Code, você pode navegar facilmente até o diretório. E inicialize o terraform com o comando:
+
+  6. **Initializing Terraform** <br> 
+    Now, in the terminal, navigate to the directory where the main.tf file is located. If you are using Visual Studio Code, you can easily navigate to the directory. Initialize Terraform with the command:
       ```
       terraform init
       ```
 
-  7. **Aplique a Configuração do Terraform** <br>
-    Após a inicialização, você está pronto para criar ou atualizar a infraestrutura na AWS. Para aplicar as configurações definidas nos arquivos .tf e provisionar a infraestrutura na AWS, use o comando:
+  7. **Apply Terraform Configuration** <br> 
+    After initialization, you are ready to create or update the infrastructure on AWS. To apply the configurations defined in the .tf files and provision the infrastructure on AWS, use the command:
       ```
       terraform apply
       ```
-  8. **Revise e Confirme** <br>
-  O Terraform apresentará um resumo das mudanças que serão feitas. Revise as alterações e, se estiver de acordo, confirme digitando `yes` quando solicitado.    
 
+  8. **Review and Confirm** <br> 
+    Terraform will present a summary of the changes that will be made. Review the changes, and if you agree, confirm by typing yes when prompted.
 
 # 💡How to Use the Project?
 Após configurar o ambiente na nuvem com sucesso, você pode começar a usar a infraestrutura provisionada para hospedar suas aplicações. Abaixo estão alguns exemplos de como aproveitar os recursos e funcionalidades fornecidos pelo Bubbles AWS Architecture:
